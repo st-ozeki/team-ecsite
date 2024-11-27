@@ -33,7 +33,7 @@ public interface TblCartMapper {
 	 * @param cart カート情報
 	 * @return 登録件数
 	 */
-	@Insert("INSERT INTO tbl_cart (user_id, product_id, product_count, created_at, updated_at) VALUES (#{userId}, #{productId}, #{productCount}, now(), now())")
+	@Insert("INSERT INTO tbl_cart (user_id, product_id, product_count) VALUES (#{userId}, #{productId}, #{productCount})")
 	@Options(useGeneratedKeys=true, keyProperty="id")
 	int insert(TblCart cart);
 	
@@ -42,7 +42,7 @@ public interface TblCartMapper {
 	 * @param cart カート情報
 	 * @return 更新件数
 	 */
-	@Update("UPDATE tbl_cart SET product_count = product_count + #{productCount} WHERE user_id = #{userId} AND product_id = #{productId}")
+	@Update("UPDATE tbl_cart SET updated_at = now(), product_count = product_count + #{productCount} WHERE user_id = #{userId} AND product_id = #{productId}")
 	int update(TblCart cart);
 	
 	/**
@@ -59,7 +59,7 @@ public interface TblCartMapper {
 	 * @param tmpUserId 仮ユーザーID
 	 * @return 更新件数
 	 */
-	@Update("UPDATE tbl_cart SET user_id = #{userId} WHERE user_id = #{tmpUserId}")
+	@Update("UPDATE tbl_cart SET updated_at = now(), user_id = #{userId} WHERE user_id = #{tmpUserId}")
 	int updateUserId(@Param("userId") int userId, @Param("tmpUserId") int tmpUserId);
 	
 	/**
